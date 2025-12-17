@@ -59,7 +59,7 @@ export default function Hero() {
               </Link>
 
               <a
-                href="/Md. Sabbir Akon_CV"
+                href="/Md. Sabbir Akon_CV.pdf"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-border/60 bg-card/30 px-6 py-3 text-sm font-medium hover:bg-accent/50 transition-colors"
               >
                 Resume <Download className="h-4 w-4" />

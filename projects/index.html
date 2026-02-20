@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <title>Projects — Md. Sabbir Akon</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect"/>
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,700;12..96,800&amp;family=JetBrains+Mono:wght@300;400;500&amp;family=Instrument+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --bg:#060b18;--surface:#0b1228;--surface2:#101a36;
+      --border:rgba(255,255,255,0.055);--border-hover:rgba(60,255,160,0.2);
+      --accent:#3cffa0;--accent-dim:rgba(60,255,160,0.08);
+      --accent2:#38bdf8;--accent2-dim:rgba(56,189,248,0.08);
+      --amber:#fbbf24;
+      --text:#dce9f8;--muted:#4e6580;--muted2:#8ba3be;
+      --hf:'Bricolage Grotesque',sans-serif;
+      --mf:'JetBrains Mono',monospace;
+      --bf:'Instrument Sans',sans-serif;
+      --r4:4px;--r8:8px;--r12:12px;
+    }
+    html{scroll-behavior:smooth;}
+    body{background:var(--bg);color:var(--text);font-family:var(--bf);font-weight:400;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
+    a{color:inherit;text-decoration:none;}
+    button{font:inherit;cursor:pointer;border:none;background:none;}
+    
+    #progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));z-index:1000;width:0%;}
+    
+    /* Cursor (desktop only) */
+    .cur-dot, .cur-ring { display: none; }
+    @media (pointer: fine) {
+      .cur-dot{display:block;width:6px;height:6px;background:var(--accent);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s;}
+      .cur-ring{display:block;width:32px;height:32px;border:1px solid rgba(60,255,160,.35);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .4s cubic-bezier(.23,1,.32,1);}
+      body:has(a:hover) .cur-ring, body:has(button:hover) .cur-ring { width:48px;height:48px;border-color:rgba(60,255,160,.6); }
+    }
+    
+    nav{position:fixed;top:0;inset-inline:0;z-index:200;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);background:rgba(6,11,24,0.7);border-bottom:1px solid var(--border);padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:62px;}
+    .nav-logo{font-family:var(--mf);font-size:.82rem;color:var(--accent);letter-spacing:.05em;}
+    .nav-logo span{color:var(--muted2);}
+    .nav-links{display:flex;gap:2rem;align-items:center;}
+    .nav-links a{font-family:var(--mf);font-size:.73rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);transition:color .2s;}
+    .nav-links a:hover{color:var(--accent);}
+    .nav-back{padding:.45rem 1.1rem;border:1px solid var(--border);border-radius:var(--r4);display:flex;align-items:center;gap:.4rem;}
+    .nav-back:hover{border-color:var(--accent);color:var(--accent)!important;}
+    .nav-back svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    /* ===== Modern hamburger + mobile sheet ===== */
+.hamburger{
+  display:none;
+  width:44px;height:44px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(11,18,40,.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 0 0 1px rgba(60,255,160,.04), 0 18px 40px rgba(0,0,0,.35);
+  align-items:center;justify-content:center;
+  cursor:pointer;
+  position: relative;
+  transition: border-color .2s, transform .2s, background .2s;
+}
+.hamburger:hover{
+  border-color: var(--border-hover);
+  background: rgba(16,26,54,.55);
+  transform: translateY(-1px);
+}
+.hamburger:active{ transform: translateY(0) scale(.98); }
+.hamburger:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(60,255,160,.10), 0 0 0 1px rgba(60,255,160,.25);
+}
+.hamburger span{
+  position:absolute;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(220,233,248,.92);
+  transition: transform .25s ease, top .25s ease, opacity .2s ease, width .25s ease;
+}
+.hamburger span:nth-child(1){ top: 16px; }
+.hamburger span:nth-child(2){ top: 21px; width: 14px; opacity: .85; }
+.hamburger span:nth-child(3){ top: 26px; }
+
+.hamburger.is-open span:nth-child(1){ top: 21px; transform: rotate(45deg); }
+.hamburger.is-open span:nth-child(2){ opacity: 0; width: 0; }
+.hamburger.is-open span:nth-child(3){ top: 21px; transform: rotate(-45deg); }
+
+@media (max-width: 900px){
+  .hamburger{ display:flex; }
+}
+
+/* overlay */
+.mobile-nav{
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: none;
+  padding: 12px;
+  background: rgba(6,11,24,.62);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+.mobile-nav.open{ display:flex; align-items:flex-start; justify-content:center; }
+.mobile-nav[aria-hidden="true"]{ display:none; }
+
+/* sheet */
+.mobile-sheet{
+  width: min(560px, 100%);
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(11,18,40,.96), rgba(11,18,40,.90));
+  box-shadow: 0 32px 90px rgba(0,0,0,.65);
+  overflow: hidden;
+  transform: translateY(-14px) scale(.985);
+  opacity: 0;
+  transition: transform .25s ease, opacity .25s ease;
+}
+.mobile-nav.open .mobile-sheet{
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.mobile-head{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 14px 14px 10px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(16,26,54,.45);
+}
+.mobile-brand{
+  font-family: var(--mf);
+  font-size: .82rem;
+  letter-spacing: .05em;
+  color: var(--accent);
+}
+.mobile-brand span{ color: var(--muted2); }
+
+.mobile-close{
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(11,18,40,.55);
+  color: var(--text);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size: 18px;
+  transition: border-color .2s, transform .2s, background .2s;
+}
+.mobile-close:hover{
+  border-color: var(--border-hover);
+  background: rgba(16,26,54,.7);
+  transform: translateY(-1px);
+}
+.mobile-close:active{ transform: translateY(0) scale(.98); }
+
+.mobile-links{
+  padding: 12px;
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mobile-links a{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding: 14px 14px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  background: rgba(255,255,255,.03);
+  color: var(--muted2);
+  font-family: var(--mf);
+  font-size: .9rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  transition: border-color .2s, color .2s, background .2s, transform .2s;
+}
+.mobile-links a:hover{
+  border-color: var(--border-hover);
+  color: var(--accent);
+  background: rgba(60,255,160,.07);
+  transform: translateY(-1px);
+}
+.mobile-links a::after{
+  content:"";
+  width: 10px;height: 10px;
+  border-right: 2px solid currentColor;
+  border-top: 2px solid currentColor;
+  transform: rotate(45deg);
+  opacity: .75;
+}
+
+/* optional CTA look */
+.mobile-links .mobile-cta{
+  border-color: rgba(60,255,160,.22);
+  background: rgba(60,255,160,.07);
+  color: var(--accent);
+}
+
+/* prevent scroll when menu open */
+body.menu-open{ overflow: hidden; }
+    
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");opacity:.5;}
+    
+    .page-header{padding:8rem 3rem 3rem;max-width:1080px;margin:0 auto;}
+    .page-eyebrow{font-family:var(--mf);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;}
+    .page-eyebrow::before{content:'';width:18px;height:1px;background:var(--accent);}
+    .page-title{font-family:var(--hf);font-size:clamp(2.5rem,5vw,4.5rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:.75rem;}
+    .page-title .stroke{color:transparent;-webkit-text-stroke:1.5px var(--accent);}
+    .page-sub{color:var(--muted2);font-size:1rem;max-width:520px;}
+    
+    .filter-bar{padding:0 3rem;max-width:1080px;margin:2rem auto;display:flex;gap:.5rem;flex-wrap:wrap;}
+    .filter-btn{font-family:var(--mf);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;padding:.5rem 1.15rem;border-radius:var(--r4);border:1px solid var(--border);color:var(--muted2);cursor:pointer;transition:.2s;background:transparent;display:flex;align-items:center;gap:.4rem;}
+    .filter-btn:hover,.filter-btn.active{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+    .filter-btn.f-ml.active{border-color:var(--accent2);color:var(--accent2);background:var(--accent2-dim);}
+    .filter-btn.f-robotics.active{border-color:var(--amber);color:var(--amber);background:rgba(251,191,36,.08);}
+    .filter-btn.f-other.active{border-color:var(--muted2);color:var(--muted2);background:rgba(139,163,190,.08);}
+    .fcount{font-size:.65rem;background:rgba(255,255,255,.06);border-radius:20px;padding:.1rem .45rem;}
+    
+    .projects-section{padding:0 3rem 6rem;max-width:1080px;margin:0 auto;}
+    .cat-label{font-family:var(--mf);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:2.5rem 0 1.25rem;display:flex;align-items:center;gap:.75rem;}
+    .cat-label::after{content:'';flex:1;height:1px;background:var(--border);}
+    .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+    .proj-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r12);padding:1.75rem;transition:border-color .25s,transform .3s;display:flex;flex-direction:column;position:relative;overflow:hidden;}
+    .proj-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent 60%,var(--accent-dim));opacity:0;transition:opacity .3s;}
+    .proj-card:hover{border-color:var(--border-hover);transform:translateY(-4px);}
+    .proj-card:hover::before{opacity:1;}
+    .proj-card.ml:hover{border-color:rgba(56,189,248,.25);}
+    .proj-card.ml::before{background:linear-gradient(135deg,transparent 60%,var(--accent2-dim));}
+    .proj-card.robotics:hover{border-color:rgba(251,191,36,.25);}
+    .proj-cat-badge{display:inline-flex;align-items:center;gap:.35rem;font-family:var(--mf);font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;padding:.25rem .65rem;border-radius:2px;margin-bottom:1.1rem;width:fit-content;}
+    .cat-ml{background:rgba(56,189,248,.1);border:1px solid rgba(56,189,248,.2);color:var(--accent2);}
+    .cat-web{background:rgba(60,255,160,.08);border:1px solid rgba(60,255,160,.18);color:var(--accent);}
+    .cat-robotics{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.18);color:var(--amber);}
+    .cat-other{background:rgba(148,163,190,.08);border:1px solid rgba(148,163,190,.15);color:var(--muted2);}
+    .proj-title{font-family:var(--hf);font-size:1.05rem;font-weight:700;margin-bottom:.4rem;line-height:1.3;}
+    .proj-timeline{font-family:var(--mf);font-size:.67rem;color:var(--muted);margin-bottom:.75rem;}
+    .proj-desc{font-size:.84rem;color:var(--muted2);flex:1;margin-bottom:1.2rem;line-height:1.75;list-style:none;}
+    .proj-desc li{margin-bottom:.3rem;padding-left:.85rem;position:relative;}
+    .proj-desc li::before{content:'›';position:absolute;left:0;color:var(--accent);}
+    .proj-stack{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1.25rem;}
+    .proj-tag{font-family:var(--mf);font-size:.63rem;padding:.2rem .5rem;border-radius:2px;background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--muted);}
+    .proj-links{display:flex;gap:.75rem;margin-top:auto;}
+    .proj-link{font-family:var(--mf);font-size:.72rem;letter-spacing:.06em;color:var(--accent2);display:flex;align-items:center;gap:.3rem;transition:opacity .2s;}
+    .proj-link:hover{opacity:.7;}
+    .proj-link svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .back-home{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--mf);font-size:.75rem;letter-spacing:.08em;color:var(--muted2);border:1px solid var(--border);padding:.55rem 1.2rem;border-radius:var(--r4);transition:.2s;margin-top:4rem;}
+    .back-home:hover{border-color:var(--accent);color:var(--accent);}
+    .back-home svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+    .cat-section{transition:opacity .3s;}
+    .cat-section.hidden{display:none;}
+    .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+    .reveal.up{opacity:1;transform:none;}
+    
+    footer{padding:2rem 3rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+    .footer-left{font-family:var(--mf);font-size:.73rem;color:var(--muted);}
+    .footer-left span{color:var(--accent);}
+    .footer-right{font-family:var(--mf);font-size:.73rem;color:var(--muted);}
+    
+    /* Mobile responsiveness */
+    @media(max-width:900px){
+      nav{padding:0 1.5rem;}.nav-links{display:none;}.hamburger{display:flex;}
+      .page-header,.filter-bar,.projects-section{padding-inline:1.5rem;}
+      .proj-grid{grid-template-columns:1fr 1fr;}
+      footer{padding:1.5rem;flex-direction:column;gap:.5rem;text-align:center;}
+    }
+    @media(max-width:580px){
+      .proj-grid{grid-template-columns:1fr;}
+      .page-title{font-size:clamp(2rem,8vw,3rem);}
+      .filter-btn{font-size:.65rem;padding:.4rem .8rem;}
+    }
+    
+    /* Touch device optimizations */
+    @media (pointer: coarse) {
+      .proj-card:hover { transform: none; }
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div id="progress-bar"></div>
+  <div class="cur-dot" id="curDot"></div>
+  <div class="cur-ring" id="curRing"></div>
+  
+  <!-- Mobile nav sheet -->
+<div class="mobile-nav" id="mobileNav" aria-hidden="true">
+  <div class="mobile-sheet" role="dialog" aria-modal="true" aria-label="Mobile menu">
+    <div class="mobile-head">
+      <div class="mobile-brand"><span>//</span> sabbir.akon</div>
+      <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+    </div>
+
+    <div class="mobile-links">
+      <a href="../" onclick="closeMobile()">Home</a>
+      <a href="../#about" onclick="closeMobile()">About</a>
+      <a href="../#skills" onclick="closeMobile()">Skills</a>
+      <a href="../#contact" onclick="closeMobile()">Contact</a>
+      <a href="../" onclick="closeMobile()" class="mobile-cta">Back</a>
+    </div>
+  </div>
+</div>
+  
+  <nav>
+    <div class="nav-logo">
+  <a href="../"><span>// </span>sabbir.akon</a>
+</div>
+
+<ul class="nav-links">
+  <li><a href="../">Home</a></li>
+  <li><a href="../#about">About</a></li>
+  <li><a href="../#skills">Skills</a></li>
+  <li><a href="../#contact">Contact</a></li>
+  <li>
+    <a class="nav-back" href="../">
+      <svg viewBox="0 0 24 24">
+        <line x1="19" x2="5" y1="12" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back
+    </a>
+  </li>
+</ul>
+  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+  <span></span><span></span><span></span>
+</button>
+  </nav>
+  
+  <div class="page-header reveal">
+    <div class="page-eyebrow">Portfolio / Projects</div>
+    <h1 class="page-title">All <span class="stroke">Projects</span></h1>
+    <p class="page-sub">A full archive of my work spanning machine learning research, web engineering, robotics, and more.</p>
+  </div>
+  
+  <div class="filter-bar reveal">
+    <button class="filter-btn active" data-cat="all">All <span class="fcount">0</span></button>
+    <button class="filter-btn f-ml" data-cat="ml">
+      <svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"></path></svg>
+      ML / AI <span class="fcount">0</span>
+    </button>
+    <button class="filter-btn" data-cat="web">
+      <svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 010 20"></path></svg>
+      Web <span class="fcount">0</span>
+    </button>
+    <button class="filter-btn f-robotics" data-cat="robotics">
+      <svg fill="none" height="10" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="10"><rect height="10" rx="2" width="18" x="3" y="11"></rect><path d="M12 11V7M8 7h8"></path></svg>
+      Robotics <span class="fcount">0</span>
+    </button>
+    <button class="filter-btn f-other" data-cat="other">Other <span class="fcount">0</span></button>
+  </div>
+  
+  <div class="projects-section" id="projectsArchive"></div>
+  
+  <footer>
+    <div class="footer-left">© 2026 <span>Md. Sabbir Akon</span>. All rights reserved.</div>
+    <div class="footer-right">Built with precision · Dhaka, Bangladesh</div>
+  </footer>
+
+  <script>
+    // PORTFOLIO PROJECTS DATA - EDIT THIS ARRAY TO UPDATE PROJECTS
+    const projectsData = [
+      { title: "Stochastic Resonance Clustering (SRC)", timeline: "Aug 2025 – Sep 2025", category: "ml", categoryLabel: "ML / AI", bullets: ["Non-deterministic deep clustering model with learnable stochasticity in an autoencoder latent space.", "Reduced suboptimal local minima common in deterministic clustering.", "Outperformed baseline K-Means and deterministic AE variants on Fashion-MNIST."], stack: ["Python", "PyTorch", "Unsupervised Learning"], links: [{ label: "GitHub", href: "https://github.com/akonBRO/Non-Deterministic-Unsupervised-Neural-Network-Model", type: "github" }] },
+      { title: "Travel Insurance Claim Prediction", timeline: "May 2025 – Jun 2025", category: "ml", categoryLabel: "ML / AI", bullets: ["Predictive model to estimate likelihood of travel insurance claims from demographic and trip data.", "Applied preprocessing and feature engineering to improve model performance."], stack: ["Python", "scikit-learn", "Feature Engineering"], links: [{ label: "GitHub", href: "https://github.com/akonBRO/Travel-Insurance-Claim-Prediction", type: "github" }] },
+      { title: "Electromber — Service Platform Prototype", timeline: "Jun 2025", category: "web", categoryLabel: "Web", bullets: ["Prototype platform connecting customers with verified electricians and plumbers.", "Designed user flow around fast service delivery and transparent pricing."], stack: ["React.js", "Tailwind CSS"], links: [{ label: "Live", href: "https://electromber.vercel.app/", type: "live" }] },
+      { title: "ClubSync — Club Management System", timeline: "Apr 2025 – May 2025", category: "web", categoryLabel: "Web", bullets: ["Full-stack MERN app for event scheduling, member management, and centralized communication.", "Built as CSE470 course project with real-world workflows."], stack: ["MongoDB", "Express", "React", "Node.js"], links: [{ label: "GitHub", href: "https://github.com/akonBRO/ClubSync", type: "github" }] },
+      { title: "OCA Management System", timeline: "Dec 2024 – Jan 2025", category: "web", categoryLabel: "Web", bullets: ["System to manage co-curricular event bookings, participation, and budget execution.", "Designed for students, clubs, and admin with live deployment."], stack: ["PHP", "MySQL", "JavaScript", "Bootstrap"], links: [{ label: "GitHub", href: "https://github.com/akonBRO/OCA-Management-System_CSE370", type: "github" }, { label: "Live", href: "https://bracu-oca.online/", type: "live" }] },
+      { title: "BRACU Summer'22 Football Team Website", timeline: "Aug 2023 – Sep 2024", category: "web", categoryLabel: "Web", bullets: ["Built and maintained a public website for a BRAC University football team.", "Managed content updates, responsive design, and team information structure."], stack: ["WordPress", "Web Development"], links: [{ label: "Live", href: "https://live-bracusummer22.pantheonsite.io/", type: "live" }] },
+      { title: "Apple Homepage Recreate (WordPress)", timeline: "Dec 2023", category: "web", categoryLabel: "Web", bullets: ["Recreated an Apple-style homepage layout for premium UI practice.", "Focused on responsive layout, visual accuracy, and clean spacing."], stack: ["WordPress", "HTML", "CSS"], links: [{ label: "Video", href: "https://drive.google.com/file/d/1tLG4AgYpMydkg_cNPmiCAiuZ4aOoQURN/view", type: "live" }] },
+      { title: "Automated River Cleaning Robot", timeline: "Dec 2024 – Jan 2025", category: "robotics", categoryLabel: "Robotics", bullets: ["Autonomous robot with obstacle avoidance and waste detection using ultrasonic sensors.", "Conveyor mechanism collects floating debris and stops when bin is full."], stack: ["Arduino", "C++", "Ultrasonic Sensors"], links: [{ label: "GitHub", href: "https://github.com/akonBRO/Automated-River-Cleaning-Robot", type: "github" }] },
+      { title: "Billing Software (Python)", timeline: "Jun 2023", category: "other", categoryLabel: "Other", bullets: ["Small billing workflow application built as a Python practice project."], stack: ["Python"], links: [{ label: "Video", href: "https://drive.google.com/file/d/1oX4dbwf4XchCeU9Jo6XypOy5lAraMB6J/view", type: "live" }] },
+      { title: "Modern City Revolution", timeline: "Jan 2020 – Jan 2021", category: "other", categoryLabel: "Other", bullets: ["Science-club project exploring smart city and sustainable urban design concepts.", "Contributed to winning the 7th DCSC National Science Expo and 42nd National Science Week recognition."], stack: ["Science Club Project"], links: [{ label: "Drive", href: "https://drive.google.com/file/d/1BNItq3kmIUj-aGEjEhnYBVaFNRUk6ne1/view", type: "live" }] }
+    ];
+
+    // Use projectsData directly
+    const getData = () => ({ projects: projectsData });
+
+    // Cursor (desktop only)
+    if (window.matchMedia('(pointer: fine)').matches) {
+      const dot=document.getElementById('curDot'),ring=document.getElementById('curRing');
+      let mx=0,my=0,rx=0,ry=0;
+      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+      (function l(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(l);})();
+    }
+    
+    window.addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('progress-bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100+'%';});
+   // ===== Mobile nav (projects page) =====
+const mobileNav = document.getElementById('mobileNav');
+const hamburger = document.getElementById('hamburger');
+const mobileClose = document.getElementById('mobileClose');
+
+function openMobile(){
+  mobileNav.classList.add('open');
+  mobileNav.setAttribute('aria-hidden','false');
+  hamburger.classList.add('is-open');
+  hamburger.setAttribute('aria-expanded','true');
+  document.body.classList.add('menu-open');
+}
+function closeMobile(){
+  mobileNav.classList.remove('open');
+  mobileNav.setAttribute('aria-hidden','true');
+  hamburger.classList.remove('is-open');
+  hamburger.setAttribute('aria-expanded','false');
+  document.body.classList.remove('menu-open');
+}
+
+hamburger?.addEventListener('click', openMobile);
+mobileClose?.addEventListener('click', closeMobile);
+
+// click outside sheet closes
+mobileNav?.addEventListener('click', (e)=>{
+  if (!e.target.closest('.mobile-sheet')) closeMobile();
+});
+
+// ESC closes
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape' && mobileNav?.classList.contains('open')) closeMobile();
+});
+
+// for inline onclick="closeMobile()"
+window.closeMobile = closeMobile;
+    
+    const obs=new IntersectionObserver(en=>{en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('up');obs.unobserve(e.target);}});},{threshold:.08});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // Category metadata
+    const CAT_META = {
+      ml:{label:"ML / AI Research", badge:"cat-ml"},
+      web:{label:"Web Development", badge:"cat-web"},
+      robotics:{label:"Robotics", badge:"cat-robotics"},
+      other:{label:"Other", badge:"cat-other"},
+    };
+
+    // Render projects from data.js
+    function renderArchive(){
+      const data = getData();
+      const host=document.getElementById('projectsArchive'); 
+      if(!host || !data.projects) return;
+      
+      const groups={ml:[], web:[], robotics:[], other:[]};
+      data.projects.forEach(p=>{ (groups[p.category]||groups.other).push(p); });
+
+      host.innerHTML = Object.entries(groups)
+        .filter(([k,arr])=>arr.length)
+        .map(([k,arr])=>{
+          const meta = CAT_META[k] || {label:"Projects", badge:"cat-other"};
+          const cards = arr.map(p=>{
+            const links=(p.links||[]).map(l=>{
+              const type = l.type || (String(l.href||"").includes("github.com") ? "github" : "live");
+              const icon = type==="github"
+                ? '<svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>'
+                : '<svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>';
+              return `<a class="proj-link" href="${l.href}" target="_blank" rel="noopener">${icon}${l.label|| (type==="github"?"GitHub":"Live")}</a>`;
+            }).join("");
+
+            const stack=(p.stack||[]).map(t=>`<span class="proj-tag">${t}</span>`).join("");
+            const bullets=(p.bullets||[]).map(b=>`<li>${b}</li>`).join("");
+            return `
+              <div class="proj-card reveal ${k}" data-cat="${p.category}">
+                <div class="proj-cat-badge ${meta.badge}">${p.categoryLabel || meta.label.replace(" Research","").replace(" Development","")}</div>
+                <div class="proj-title">${p.title}</div>
+                ${p.timeline?`<div class="proj-timeline">${p.timeline}</div>`:""}
+                <ul class="proj-desc">${bullets}</ul>
+                <div class="proj-stack">${stack}</div>
+                <div class="proj-links">${links}</div>
+              </div>`;
+          }).join("");
+
+          return `
+            <div class="cat-section" data-sec="${k}">
+              <div class="cat-label">${meta.label}</div>
+              <div class="proj-grid">${cards}</div>
+            </div>`;
+        }).join("");
+    }
+
+    function updateCounts(){
+      const data = getData();
+      const total=(data.projects||[]).length;
+      const counts = (data.projects||[]).reduce((acc,p)=>{acc[p.category]=(acc[p.category]||0)+1; return acc;},{});
+      document.querySelectorAll(".filter-btn").forEach(btn=>{
+        const cat=btn.dataset.cat || "all";
+        const span=btn.querySelector(".fcount");
+        if(!span) return;
+        span.textContent = (cat==="all") ? String(total) : String(counts[cat]||0);
+      });
+    }
+
+    function applyFilter(cat){
+      const cards = document.querySelectorAll("#projectsArchive .proj-card");
+      cards.forEach(c=>{
+        const ok = (cat==="all") || (c.getAttribute("data-cat")===cat);
+        c.style.display = ok ? "" : "none";
+      });
+      document.querySelectorAll("#projectsArchive .cat-section").forEach(sec=>{
+        const anyVisible = Array.from(sec.querySelectorAll(".proj-card")).some(c=>c.style.display!=="none");
+        sec.style.display = anyVisible ? "" : "none";
+      });
+    }
+
+    function wireFilters(){
+      const btns=document.querySelectorAll(".filter-btn");
+      if(!btns.length) return;
+      btns.forEach(b=>{
+        b.addEventListener("click", ()=>{
+          btns.forEach(x=>x.classList.remove("active"));
+          b.classList.add("active");
+          applyFilter(b.dataset.cat || "all");
+        });
+      });
+      const active = Array.from(btns).find(b=>b.classList.contains("active")) || btns[0];
+      applyFilter(active?.dataset.cat || "all");
+    }
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", ()=>{
+      renderArchive();
+      updateCounts();
+      wireFilters();
+      // Make all reveal elements visible
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('up'));
+    });
+
+    // Compatibility with existing onclick
+    window.filter = function(cat, el){
+      const btns=document.querySelectorAll(".filter-btn");
+      btns.forEach(x=>x.classList.remove("active"));
+      if(el) el.classList.add("active");
+      applyFilter(cat || "all");
+    };
+  </script>
+</body>
+</html>

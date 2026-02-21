@@ -136,7 +136,6 @@
       background: linear-gradient(90deg, var(--bg) 0%, var(--surface) 30%, var(--surface) 70%, var(--bg) 100%);
       position: relative;
     }
-    /* Fade edges */
     .marquee-section::before, .marquee-section::after {
       content: '';
       position: absolute;
@@ -215,7 +214,6 @@
     .meta-val a { color:var(--accent); transition:opacity .2s; }
     .meta-val a:hover { opacity:.7; }
 
-    /* Modern editorial photo */
     .about-avatar-wrap { position:relative; display:flex; justify-content:center; align-items:center; min-height:420px; }
     .avatar-glow { position:absolute; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle,rgba(60,255,160,0.1) 0%,rgba(56,189,248,0.05) 60%,transparent 100%); filter:blur(50px); z-index:0; animation:glowPulse 4s ease-in-out infinite; }
     @keyframes glowPulse{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.1);}}
@@ -239,7 +237,7 @@
     @keyframes chipFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 
     /* ═══ SKILLS ═══ */
-    .skills-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.25rem; }
+    .skills-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.25rem; }
     .skill-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--r16); padding:1.6rem; transition:border-color .3s,transform .3s,box-shadow .3s; position:relative; overflow:hidden; }
     .skill-card::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,var(--accent-dim),transparent 60%); opacity:0; transition:opacity .3s; }
     .skill-card.accent2-card::before { background:linear-gradient(135deg,var(--accent2-dim),transparent 60%); }
@@ -768,11 +766,14 @@
    PORTFOLIO DATA
 ═══════════════════════════════════════════════ */
 const D = {
+  /* ── UPDATED SKILLS: added SQL, PhpMyAdmin, Machine Learning, Data Structuring,
+         STM32, Raspberry Pi, MS Excel, MS Word, PowerPoint, Leadership, Teamwork,
+         Public Speaking — distributed into existing 4 cards ── */
   skills: [
     { category:"Frontend", icon:"globe", tags:["React.js","Next.js","TypeScript","JavaScript","Tailwind CSS","Bootstrap","HTML5","CSS3"] },
-    { category:"Backend & DB", icon:"server", tags:["Node.js","Express","PHP","Python","MongoDB","MySQL","REST API","WordPress"] },
-    { category:"ML / AI", icon:"brain", accent:"accent2", tags:["PyTorch","scikit-learn","Python","Feature Engineering","Deep Learning","Data Cleaning","Clustering"] },
-    { category:"Tools & Other", icon:"code", accent:"amber", tags:["Git","GitHub","Arduino","C/C++","Vercel","Linux","Ultrasonic Sensors"] }
+    { category:"Backend & DB", icon:"server", tags:["Node.js","Express","PHP","Python","MongoDB","MySQL","SQL","PhpMyAdmin","REST API","WordPress"] },
+    { category:"ML / AI", icon:"brain", accent:"accent2", tags:["PyTorch","scikit-learn","Python","Machine Learning","Feature Engineering","Deep Learning","Data Cleaning","Data Structuring","Clustering"] },
+    { category:"Tools & Skills", icon:"code", accent:"amber", tags:["Git","GitHub","Arduino","STM32","Raspberry Pi","C/C++","Vercel","Linux","Ultrasonic Sensors","MS Excel","MS Word","PowerPoint","Leadership","Teamwork","Public Speaking"] }
   ],
   featuredProjects: [
     { title:"Stochastic Resonance Clustering", category:"ml", categoryLabel:"ML / AI", description:"Non-deterministic deep clustering model with learnable stochasticity in autoencoder latent space. Outperformed K-Means on Fashion-MNIST.", stack:["Python","PyTorch","Unsupervised Learning"], links:[{label:"GitHub",href:"https://github.com/akonBRO/Non-Deterministic-Unsupervised-Neural-Network-Model",type:"github"}] },
@@ -850,7 +851,20 @@ const TI = {
   "C/C++":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#00599c" opacity=".8"/><text x="4" y="16" font-size="9" fill="#fff" font-family="monospace" font-weight="bold">C++</text>'},
   "Vercel":{svg:'<path d="M12 3L22 20H2z" fill="#fff" opacity=".85"/>'},
   "Linux":{svg:'<path d="M12 2c-1.5 0-3 1-3.5 3C8 7 7 8.5 7 10c0 2.5 1 4.5 5 7 4-2.5 5-4.5 5-7 0-1.5-1-3-1.5-5-.5-2-2-3-3.5-3z" fill="#fcc624" opacity=".9"/><circle cx="10" cy="10" r="1" fill="#333"/><circle cx="14" cy="10" r="1" fill="#333"/>'},
-  "Ultrasonic Sensors":{svg:'<circle cx="12" cy="12" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M5 12H2M22 12h-3M12 5V2M12 22v-3" stroke="#fbbf24" stroke-width="1.3" opacity=".6"/>'}
+  "Ultrasonic Sensors":{svg:'<circle cx="12" cy="12" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M5 12H2M22 12h-3M12 5V2M12 22v-3" stroke="#fbbf24" stroke-width="1.3" opacity=".6"/>'},
+  /* ── NEW ICONS ADDED ── */
+  "SQL":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#336791" opacity=".85"/><text x="3.5" y="16" font-size="8" fill="#fff" font-family="monospace" font-weight="bold">SQL</text>'},
+  "PhpMyAdmin":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#f48c00" opacity=".85"/><text x="3" y="16" font-size="6.5" fill="#fff" font-family="monospace" font-weight="bold">PMA</text>'},
+  "Machine Learning":{svg:'<circle cx="5" cy="5" r="2" fill="none" stroke="#38bdf8" stroke-width="1.4"/><circle cx="19" cy="5" r="2" fill="none" stroke="#38bdf8" stroke-width="1.4"/><circle cx="12" cy="12" r="2.5" fill="none" stroke="#38bdf8" stroke-width="1.4"/><circle cx="5" cy="19" r="2" fill="none" stroke="#38bdf8" stroke-width="1.4"/><circle cx="19" cy="19" r="2" fill="none" stroke="#38bdf8" stroke-width="1.4"/><path d="M7 5h10M6.4 6.4l4.2 4.2M17.6 6.4l-4.2 4.2M6.4 17.6l4.2-4.2M17.6 17.6l-4.2-4.2" stroke="#38bdf8" stroke-width="1.2" opacity=".7"/>'},
+  "Data Structuring":{svg:'<rect x="3" y="3" width="7" height="4" rx="1" fill="none" stroke="#38bdf8" stroke-width="1.4"/><rect x="3" y="10" width="7" height="4" rx="1" fill="none" stroke="#38bdf8" stroke-width="1.4"/><rect x="3" y="17" width="7" height="4" rx="1" fill="none" stroke="#38bdf8" stroke-width="1.4"/><path d="M10 5h4l3 3M10 12h4M10 19h4l3-3" stroke="#38bdf8" stroke-width="1.3" stroke-linecap="round"/>'},
+  "STM32":{svg:'<rect x="4" y="4" width="16" height="16" rx="2" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M8 8h8M8 12h5M8 16h8" stroke="#fbbf24" stroke-width="1.3" stroke-linecap="round"/><circle cx="16" cy="12" r="1.2" fill="#fbbf24"/>'},
+  "Raspberry Pi":{svg:'<circle cx="12" cy="12" r="4" fill="none" stroke="#c51a4a" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="#c51a4a"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2 2M16.4 16.4l2 2M5.6 18.4l2-2M16.4 7.6l2-2" stroke="#c51a4a" stroke-width="1.3" stroke-linecap="round"/>'},
+  "MS Excel":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#1d6f42"/><path d="M6 7l4 5-4 5M14 7h4M14 12h4M14 17h4" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>'},
+  "MS Word":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#2b579a"/><path d="M6 7l2 10 2-6 2 6 2-10" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>'},
+  "PowerPoint":{svg:'<rect x="2" y="2" width="20" height="20" rx="3" fill="#b7472a"/><rect x="6" y="7" width="7" height="5" rx="1.5" fill="none" stroke="#fff" stroke-width="1.4"/><path d="M6 15h12M6 18h8" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>'},
+  "Leadership":{svg:'<circle cx="12" cy="7" r="3" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M5 21v-2a5 5 0 015-5h4a5 5 0 015 5v2" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/><path d="M16 3l1.5 1.5L19 3" fill="none" stroke="#fbbf24" stroke-width="1.4" stroke-linecap="round"/>'},
+  "Teamwork":{svg:'<path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="7" r="4" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" fill="none" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>'},
+  "Public Speaking":{svg:'<path d="M12 2a3 3 0 013 3v6a3 3 0 01-6 0V5a3 3 0 013-3z" fill="none" stroke="#fbbf24" stroke-width="1.5"/><path d="M19 10v1a7 7 0 01-14 0v-1M12 18v4M8 22h8" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>'}
 };
 
 const SVG_ICONS = {
@@ -864,7 +878,7 @@ const SVG_ICONS = {
   graduation:'<path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>'
 };
 
-/* ═══ MARQUEE SETUP ═══ */
+/* ═══ MARQUEE TECH STACKS ─ original + new additions ═══ */
 const marqueeStacks = [
   {name:"React.js",key:"React.js"},{name:"Python",key:"Python"},{name:"PyTorch",key:"PyTorch"},
   {name:"Node.js",key:"Node.js"},{name:"TypeScript",key:"TypeScript"},{name:"MongoDB",key:"MongoDB"},
@@ -874,11 +888,16 @@ const marqueeStacks = [
   {name:"Deep Learning",key:"Deep Learning"},{name:"Arduino",key:"Arduino"},{name:"Vercel",key:"Vercel"},
   {name:"C/C++",key:"C/C++"},{name:"HTML5",key:"HTML5"},{name:"CSS3",key:"CSS3"},
   {name:"Bootstrap",key:"Bootstrap"},{name:"PHP",key:"PHP"},{name:"WordPress",key:"WordPress"},
-  {name:"REST API",key:"REST API"},{name:"Clustering",key:"Clustering"}
+  {name:"REST API",key:"REST API"},{name:"Clustering",key:"Clustering"},
+  /* ── new additions ── */
+  {name:"SQL",key:"SQL"},{name:"Machine Learning",key:"Machine Learning"},
+  {name:"STM32",key:"STM32"},{name:"Raspberry Pi",key:"Raspberry Pi"},
+  {name:"MS Excel",key:"MS Excel"},{name:"Leadership",key:"Leadership"},
+  {name:"PhpMyAdmin",key:"PhpMyAdmin"},{name:"Data Structuring",key:"Data Structuring"}
 ];
 
 function buildMarqueeRow(items, reversed) {
-  const doubled = [...items, ...items]; // duplicate for seamless loop
+  const doubled = [...items, ...items];
   return doubled.map(item => {
     const ico = TI[item.key];
     const iconHtml = ico ? `<svg viewBox="0 0 24 24" style="width:16px;height:16px;flex-shrink:0;">${ico.svg}</svg>` : '';
@@ -891,16 +910,13 @@ function renderMarquee() {
   const track = document.createElement('div');
   track.className = 'marquee-track';
   track.style.cssText = 'display:flex;flex-direction:column;';
-
   const row1 = document.createElement('div');
   row1.className = 'marquee-row';
   row1.innerHTML = buildMarqueeRow(marqueeStacks, false);
-
   const row2 = document.createElement('div');
   row2.className = 'marquee-row';
   const shuffled = [...marqueeStacks].reverse();
   row2.innerHTML = buildMarqueeRow(shuffled, true);
-
   track.appendChild(row1);
   track.appendChild(row2);
   section.appendChild(track);
@@ -1176,7 +1192,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   renderCerts();
   renderVolunteering();
 
-  // Observe all reveal + stats
   document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
   const statsStrip = document.querySelector('.stats-strip');
   if(statsStrip) statsObs.observe(statsStrip);
